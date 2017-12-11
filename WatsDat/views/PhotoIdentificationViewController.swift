@@ -224,7 +224,7 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
         cell.textLabel?.text = label.description
         //let decimalValue = label.score * 100
        // let decimalValue = [NSString stringWithFormat: @"%.0f",label.score *100]
-        let decimalValue = NSString .localizedStringWithFormat("%.f", label.score * 100)
+        let decimalValue = NSString .localizedStringWithFormat("%.f%%", label.score * 100)
         cell.detailTextLabel?.text = String(describing: decimalValue)
         
         return cell
