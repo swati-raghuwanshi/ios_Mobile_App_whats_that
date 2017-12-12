@@ -36,8 +36,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
+         mapView.removeAnnotations(favorites)
         favorites = PersistanceManager.sharedInstance.fetchFavorites()
+       
         mapView.addAnnotations(favorites)
+      
+        
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
