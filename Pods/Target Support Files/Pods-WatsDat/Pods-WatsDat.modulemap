@@ -1,0 +1,6 @@
+framework module Pods_WatsDat {
+  umbrella header "Pods-WatsDat-umbrella.h"
+
+  export *
+  module * { export * }
+}
