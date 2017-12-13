@@ -58,5 +58,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+    <key>UIRequiresFullScreen</key>
+    <true/>
+    <key>UIRequiresFullScreen~ipad</key>
+    <false/>
 </dict>
 </plist>
