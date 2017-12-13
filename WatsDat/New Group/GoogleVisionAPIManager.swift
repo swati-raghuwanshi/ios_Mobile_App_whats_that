@@ -68,8 +68,7 @@ class GoogleVisionAPIManager {
                 ]
             ]
         ]
-        //let jsonObject = JSON(jsonDictionary: jsonRequest)
-        
+       
         // Serialize the JSON
         guard let data = try? JSONSerialization.data(withJSONObject: jsonRequest) else {
             return
@@ -114,7 +113,7 @@ class GoogleVisionAPIManager {
             
             // Use SwiftyJSON to parse results
             let json = JSON(data: dataToParse)
-            //print(json)
+           
             let errorObj: JSON = json["error"]
             
             // Check for errors
@@ -124,12 +123,12 @@ class GoogleVisionAPIManager {
                 
             } else {
                 // Parse the response
-                //print(json)
+                
                 let responses: JSON = json["responses"][0]
                 
                 // Get label annotations
                 let labelAnnotations: JSON = responses["labelAnnotations"]
-                //print(labelAnnotations)
+             
                 
                 let numLabels: Int = labelAnnotations.count
                 var labels = [Label]()
@@ -160,8 +159,7 @@ class GoogleVisionAPIManager {
     
 }
 
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):
@@ -173,8 +171,7 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
-// Consider refactoring the code to use the non-optional operators.
+
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
     case let (l?, r?):

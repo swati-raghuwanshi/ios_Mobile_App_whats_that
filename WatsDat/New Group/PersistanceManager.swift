@@ -31,7 +31,7 @@ class PersistanceManager {
     }
     
     func checkIfFav(favTitle: String,filename: URL ) -> Bool  {
-        // to do
+        
         let favorites = fetchFavorites()
         let favorite = Favorite(favTitle: favTitle, filename: filename, latitude: 0.0, longitude: 0.0)
         

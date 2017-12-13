@@ -37,7 +37,6 @@ class FavoritePhotosTableViewController: UITableViewController {
         // Configure the cell...
         let favorite = favorites[indexPath.row]
         cell.textLabel?.text = favorite.favTitle
-        //cell.detailTextLabel?.textColor = .gray
         cell.imageView?.image = UIImage(contentsOfFile: (favorite.filename?.path)!)
         return cell
     }

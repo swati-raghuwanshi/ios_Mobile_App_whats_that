@@ -117,7 +117,7 @@ class PhotoDetailsViewController: UIViewController {
         
         let vc = SearchTimelineViewController()
         vc.query = titleHead
-        //present(vc, animated: true)
+       
         navigationController?.pushViewController(vc, animated: true)
         
     }

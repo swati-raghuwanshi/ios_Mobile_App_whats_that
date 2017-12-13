@@ -25,7 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
         mapView.delegate = self
         
-        // performSegue(withIdentifier: mapToDetailSegue, sender: nil)
+        
         
         
         // Do any additional setup after loading the view.
@@ -78,11 +78,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             
         }
     }
-    
-    
-    
-    
-   
-    
+  
 }
 

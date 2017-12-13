@@ -161,13 +161,12 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
         // Do any additional setup after loading the view, typically from a nib.
         
         imagePicker.delegate = self
-        //labelResults.isHidden = true
-        //spinner.hidesWhenStopped = true
+        
         MBProgressHUD.hide(for: self.view, animated: true)
         locationFinder.delegate = self
 
         findLocation()
-//
+
         
     }
     
@@ -187,10 +186,9 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.contentMode = .scaleAspectFit
-            imageView.image = pickedImage // You could optionally display the image here by setting imageView.image = pickedImage
-           // spinner.startAnimating()
+            imageView.image = pickedImage
             MBProgressHUD.showAdded(to: self.view, animated: true)
-            //labelResults.isHidden = true
+           
             
             let labelFinder = GoogleVisionAPIManager()
             
@@ -219,13 +217,11 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "displayData", for: indexPath as IndexPath)
         
-        //let dataOfLabelDisplayInCell = labels[indexPath.row]
-        //cell.textLabel?.text = labelResultsText
+        
         
         let label = labels[indexPath.row]
         cell.textLabel?.text = label.description
-        //let decimalValue = label.score * 100
-       // let decimalValue = [NSString stringWithFormat: @"%.0f",label.score *100]
+        
         let decimalValue = NSString .localizedStringWithFormat("%.f%%", label.score * 100)
         cell.detailTextLabel?.text = String(describing: decimalValue)
         
@@ -250,7 +246,7 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
             myVC.titleHead = searchString
             myVC.latitude = latitude
             myVC.longitude = longitude
-            //myVC.imagePassed = imageView.image!
+           
             if let data = UIImagePNGRepresentation(imageView.image!) {
                 filename = getDocumentsDirectory().appendingPathComponent(UUID().uuidString)
                 guard let filename = filename else {
@@ -280,19 +276,19 @@ extension PhotoIdentificationViewController: ApproximateLabelDelegate {
         DispatchQueue.main.async {
             
             self.tableView.reloadData()
-            //self.spinner.stopAnimating()
+            
             MBProgressHUD.hide(for: self.view, animated: true)
         }
     }
     
     func labelsNotFound(reason: GoogleVisionAPIManager.FailureReason) {
-        //print ("no labels")
+       
         
         
         DispatchQueue.main.async {
             
             
-            //self.spinner.stopAnimating()
+            
             MBProgressHUD.hide(for: self.view, animated: true)
             let ac = UIAlertController(title:"Error Message", message: reason.rawValue, preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel", style: .default)
@@ -317,7 +313,7 @@ extension PhotoIdentificationViewController: LocationFinderDelegate {
     func locationNotFound(reason: LocationFinder.FailureReason) {
         DispatchQueue.main.async {
             
-            //self.spinner.stopAnimating()
+            
             MBProgressHUD.hide(for: self.view, animated: true)
             let ac = UIAlertController(title:"Error Message", message: reason.rawValue, preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel", style: .default)
