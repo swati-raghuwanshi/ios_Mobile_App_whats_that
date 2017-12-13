@@ -15,6 +15,7 @@ class FavoritePhotosTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // making the map button
         navigationItem.rightBarButtonItem = UIBarButtonItem(image:UIImage(named: imageIcon),style:.plain,target:self,action: #selector(mapTapped))
         
         
@@ -28,6 +29,7 @@ class FavoritePhotosTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // setting the length of the table
         return favorites.count
     }
     
@@ -50,6 +52,7 @@ class FavoritePhotosTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "favDetailSegue" {
+            // preparing the data to pass to mapView page
             let myVC = segue.destination as! PhotoDetailsViewController
             let favorite = favorites[tableView.indexPathForSelectedRow!.row]
             

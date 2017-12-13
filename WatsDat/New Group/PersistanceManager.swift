@@ -13,9 +13,7 @@ class PersistanceManager {
     
     let favoritesKey = "favorites"
     var localFavTitle = ""
-    
-    
-    
+   
     func fetchFavorites() -> [Favorite] {
         let userDefaults = UserDefaults.standard
         let data = userDefaults.object(forKey: favoritesKey) as? Data

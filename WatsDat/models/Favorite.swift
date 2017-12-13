@@ -9,7 +9,6 @@
 import Foundation
 import MapKit
 
-
 class Favorite: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     let favTitle: String
@@ -17,15 +16,12 @@ class Favorite: NSObject, MKAnnotation {
     let latitude: Double?
     let longitude: Double?
     
-    
-    
     let favTitleKey = "favTitle"
     let favfilenameKey = "filename"
     let latitudeKey = "latitude"
     let longitudeKey = "longitude"
     
     init(favTitle: String, filename: URL, latitude: Double, longitude: Double) {
-        
         
         self.favTitle = favTitle
         self.filename = filename
@@ -44,9 +40,8 @@ class Favorite: NSObject, MKAnnotation {
             coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         } else {
             coordinate = CLLocationCoordinate2D()
-        }
-        
-        
+            
+              }
     }
 }
 
@@ -57,11 +52,11 @@ extension Favorite: NSCoding {
         aCoder.encode(filename, forKey: favfilenameKey)
         aCoder.encode(latitude, forKey: latitudeKey)
         aCoder.encode(longitude, forKey: longitudeKey)
-        
-        
+    
     }
 }
 extension Favorite {
+    // to compare the wikipedia title while saving in favorites
     static func == (lhs: Favorite, rhs: Favorite) -> Bool{
         return (lhs.favTitle == rhs.favTitle)
     }

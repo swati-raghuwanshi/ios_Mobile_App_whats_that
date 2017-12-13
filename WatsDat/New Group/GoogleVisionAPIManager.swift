@@ -28,9 +28,7 @@ class GoogleVisionAPIManager {
     var googleAPIKey = "AIzaSyB9TTTCRcdTDNfdgtKrb9sI2tDBXlVOqKU"
     var googleURL: URL {
         return URL(string: "https://vision.googleapis.com/v1/images:annotate?key=\(googleAPIKey)")!
-        
-    }
-    
+        }
     
     func base64EncodeImage(_ image: UIImage) -> String {
         var imagedata = UIImagePNGRepresentation(image)
@@ -47,7 +45,6 @@ class GoogleVisionAPIManager {
     
     func createRequest(with imageBase64: String) {
         // Create our request URL
-        
         var request = URLRequest(url: googleURL)
         request.httpMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -152,11 +149,6 @@ class GoogleVisionAPIManager {
         })
         
     }
-    
-    
-    
-    
-    
 }
 
 

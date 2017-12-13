@@ -16,11 +16,8 @@ class SearchTimelineViewController: TWTRTimelineViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         let dataSource = TWTRSearchTimelineDataSource(searchQuery: query, apiClient: TWTRAPIClient())
-        
-        dataSource.resultType = "popular"
+        dataSource.resultType = "popular" // dispalying the popular tweets
         self.dataSource = dataSource
     }
 }

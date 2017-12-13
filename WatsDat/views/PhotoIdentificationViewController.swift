@@ -15,55 +15,37 @@ import MBProgressHUD
 
 class PhotoIdentificationViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    
     var labels = [Label]()
     let locationFinder = LocationFinder()
-    
     var searchString = ""
     var filename: URL?
     var latitude: Double = 0.0
     var longitude:Double = 0.0
-    
     let imagePicker = UIImagePickerController()
     let session = URLSession.shared
     
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
-   
     @IBAction func chooseImageToAnalyze(_ sender: UITapGestureRecognizer) {
-        
-        
-        
-        
-                    imagePicker.allowsEditing = false
-        
-        
-                    let actionSheet = UIAlertController(title:"Choose Image", message:"Please select one option", preferredStyle: .actionSheet)
-        
-                    let cameraButton = UIAlertAction(title: "Click a photo", style: UIAlertActionStyle.default) { camSelected in
-                        
+        //selecting an image to analyze using tap gesture
+        imagePicker.allowsEditing = false
+        let actionSheet = UIAlertController(title:"Choose Image", message:"Please select one option", preferredStyle: .actionSheet)
+        let cameraButton = UIAlertAction(title: "Click a photo", style: UIAlertActionStyle.default) { camSelected in
                         self.requestCameraPermission()
-                        
-                    }
-        
-                    let libraryButton = UIAlertAction(title: "Select a Photo", style: UIAlertActionStyle.default) { libSelected in
+                        }
+        let libraryButton = UIAlertAction(title: "Select a Photo", style: UIAlertActionStyle.default) { libSelected in
                         self.requestGalleryPermission()
-                        
-                    }
-        
-                    let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default) {(cancelSelected) -> Void in
-        
-                    }
-                    actionSheet.addAction(libraryButton)
-                    actionSheet.addAction(cameraButton)
-                    actionSheet.addAction(cancelButton)
-        
-                    self.present(actionSheet, animated: true, completion: nil)
-        
-    }
+                        }
+        let cancelButton = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default) {(cancelSelected) -> Void in
+           }
+        actionSheet.addAction(libraryButton)
+        actionSheet.addAction(cameraButton)
+        actionSheet.addAction(cancelButton)
+        self.present(actionSheet, animated: true, completion: nil)
+}
     
     func requestCameraPermission()  {
+        // permission for camera
         let camStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         switch camStatus {
             case .notDetermined, .denied, .restricted:
@@ -93,23 +75,18 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
                        
                         ac.addAction(settingsButton)
                         ac.addAction(cancelButton)
-                        
                         self.present(ac, animated: true, completion: nil)
-                        
-                     
+                    
                     }
                 }
-            
             case .authorized:
                 imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-                
                 present(imagePicker, animated: true, completion: nil)
-            
         }
     }
     
     func requestGalleryPermission()  {
-        
+        // permission for photo libary
         let galleryStatus = PHPhotoLibrary.authorizationStatus()
         switch galleryStatus {
         case .notDetermined, .denied, .restricted:
@@ -139,35 +116,27 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
                     
                     ac.addAction(settingsButton)
                     ac.addAction(cancelButton)
-                    
                     self.present(ac, animated: true, completion: nil)
-                    
-                    
+                 
                 }
             }
             
         case .authorized:
             imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-            
             present(imagePicker, animated: true, completion: nil)
             
         }
     }
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
         imagePicker.delegate = self
-        
         MBProgressHUD.hide(for: self.view, animated: true)
         locationFinder.delegate = self
-
         findLocation()
 
-        
     }
     
     func findLocation() {
@@ -178,20 +147,14 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
-    
-    
+  
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        // resize the image selected and analyzing it 
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             imageView.contentMode = .scaleAspectFit
             imageView.image = pickedImage
             MBProgressHUD.showAdded(to: self.view, animated: true)
-           
-            
-            let labelFinder = GoogleVisionAPIManager()
-            
+           let labelFinder = GoogleVisionAPIManager()
             labelFinder.delegate = self
             
             // Base64 encode the image and create the request
@@ -208,39 +171,30 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
     
     //Table View Controller functions
     
-    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        //setting the length of the table
         return labels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // populating data in table
         let cell = tableView.dequeueReusableCell(withIdentifier: "displayData", for: indexPath as IndexPath)
-        
-        
-        
         let label = labels[indexPath.row]
         cell.textLabel?.text = label.description
-        
         let decimalValue = NSString .localizedStringWithFormat("%.f%%", label.score * 100)
         cell.detailTextLabel?.text = String(describing: decimalValue)
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // when a row in the table is selected
         let cell = tableView.cellForRow(at: indexPath)
         searchString = cell?.textLabel?.text ?? ""
-        
         performSegue(withIdentifier: "passDataToBeSearched", sender: self)
     }
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
+        //preparing to passing data to next screen
         if segue.identifier == "passDataToBeSearched"{
             let myVC = segue.destination as! PhotoDetailsViewController
             myVC.titleHead = searchString
@@ -255,9 +209,7 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
                 try? data.write(to: filename)
                 myVC.filename = filename
             }
-            
-            
-            
+        
         }
     }
     func getDocumentsDirectory() -> URL {
@@ -265,11 +217,9 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
         return paths[0]
     }
 }
-
+//adhere to the ApproximateLabelDelegate protocol
 extension PhotoIdentificationViewController: ApproximateLabelDelegate {
-    
-    
-    
+   
     func labelsFound(labels:[Label]) {
         self.labels = labels
         
@@ -283,12 +233,8 @@ extension PhotoIdentificationViewController: ApproximateLabelDelegate {
     
     func labelsNotFound(reason: GoogleVisionAPIManager.FailureReason) {
        
-        
-        
         DispatchQueue.main.async {
-            
-            
-            
+        
             MBProgressHUD.hide(for: self.view, animated: true)
             let ac = UIAlertController(title:"Error Message", message: reason.rawValue, preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel", style: .default)
@@ -312,8 +258,7 @@ extension PhotoIdentificationViewController: LocationFinderDelegate {
     
     func locationNotFound(reason: LocationFinder.FailureReason) {
         DispatchQueue.main.async {
-            
-            
+        
             MBProgressHUD.hide(for: self.view, animated: true)
             let ac = UIAlertController(title:"Error Message", message: reason.rawValue, preferredStyle: .alert)
             let cancelButton = UIAlertAction(title: "Cancel", style: .default)

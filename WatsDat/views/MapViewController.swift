@@ -24,11 +24,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        
-        
-        
-        
-        // Do any additional setup after loading the view.
+     
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,15 +32,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
+        // setting the pins on the map based on favorites
          mapView.removeAnnotations(favorites)
         favorites = PersistanceManager.sharedInstance.fetchFavorites()
-       
-        mapView.addAnnotations(favorites)
+       mapView.addAnnotations(favorites)
       
         
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        // setting up annotations
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseIdentifier) as? MKPinAnnotationView
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -56,6 +53,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+       // get the values
         let favorite = view.annotation as! Favorite
         titleHead = favorite.favTitle
         filename = favorite.filename
@@ -67,9 +65,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mapToDetailSegue" {
+            // preaparing data to be passed to PhotoDetailsViewController
             let myVC = segue.destination as! PhotoDetailsViewController
-            
-            
             myVC.titleHead = titleHead
             myVC.filename = filename
             myVC.latitude = latitude
