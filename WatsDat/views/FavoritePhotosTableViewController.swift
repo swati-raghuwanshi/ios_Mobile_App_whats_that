@@ -11,7 +11,6 @@ import UIKit
 class FavoritePhotosTableViewController: UITableViewController {
     
     var favorites = [Favorite]()
-    //var localTitle = ""
     var imageIcon = "map"
     
     override func viewDidLoad() {
@@ -37,16 +36,13 @@ class FavoritePhotosTableViewController: UITableViewController {
         
         // Configure the cell...
         let favorite = favorites[indexPath.row]
-        //localTitle = favorite.favTitle
         cell.textLabel?.text = favorite.favTitle
-        cell.detailTextLabel?.textColor = .gray
+        //cell.detailTextLabel?.textColor = .gray
         cell.imageView?.image = UIImage(contentsOfFile: (favorite.filename?.path)!)
-        
         return cell
     }
     
     @objc func mapTapped()  {
-        // if let filename = filename{
         
         performSegue(withIdentifier: "mapViewSegue", sender: nil)
         

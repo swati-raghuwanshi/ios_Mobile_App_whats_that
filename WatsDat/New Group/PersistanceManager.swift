@@ -18,19 +18,14 @@ class PersistanceManager {
     
     func fetchFavorites() -> [Favorite] {
         let userDefaults = UserDefaults.standard
-        
-        print("Fetching favorites")
-        
         let data = userDefaults.object(forKey: favoritesKey) as? Data
         
         if let data = data {
             //data is not nil, so use it
-            print("inside if let")
             return NSKeyedUnarchiver.unarchiveObject(with: data) as? [Favorite] ?? [Favorite]()
         }
         else {
             //data is nil
-            print("data is nil")
             return [Favorite]()
         }
     }
@@ -52,7 +47,6 @@ class PersistanceManager {
         let userDefaults = UserDefaults.standard
         
         var favorites = fetchFavorites()
-        //localFavTitle = favorite.favTitle
         favorites.append(favorite)
         print(favorites)
         

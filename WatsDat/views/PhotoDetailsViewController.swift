@@ -41,12 +41,10 @@ class PhotoDetailsViewController: UIViewController {
             //true
             imageIcon = "heart"
             isFavorite = true
-            print("i am in if of view did load")
             
         }else{//false
             imageIcon = "heartLess"
             isFavorite = false
-            print("i am in else of view did load")
         }
         
         
@@ -88,7 +86,6 @@ class PhotoDetailsViewController: UIViewController {
         
         let favorite = Favorite(favTitle: titleHead, filename: filename!,latitude: latitude, longitude: longitude)
         
-        print("Deleting: \(favorite)")
         
         PersistanceManager.sharedInstance.deleteFavorite(favorite)
         
@@ -134,8 +131,6 @@ extension PhotoDetailsViewController: ApproximateDataDelegate {
         self.wikiExtract = wiki.extract
         self.wikiPageid = wiki.pageid
         print(wiki.pageid)
-        //print(wiki.extract)
-        print("i came back")
         DispatchQueue.main.async {
             self.Extract.text = self.wikiExtract
             

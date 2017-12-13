@@ -55,16 +55,18 @@ class LocationFinder: NSObject {
     
     func findLocation() {
         let status = CLLocationManager.authorizationStatus()
-        
         switch status {
         case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .denied, .restricted:
+
             delegate?.locationNotFound(reason: .noPermission)
         case .authorizedWhenInUse:
+
             startTimer()
             locationManager.requestLocation()
         case .authorizedAlways:
+
             //do nothing - app can't get to this state
             break
         }
@@ -73,7 +75,7 @@ class LocationFinder: NSObject {
 
 extension LocationFinder: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+
         cancelTimer()
         
         manager.stopUpdatingLocation()
@@ -83,11 +85,13 @@ extension LocationFinder: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
+        if status == .notDetermined{
+        } else if status == .authorizedWhenInUse {
             startTimer()
             locationManager.requestLocation()
         }
         else {
+            print(status.rawValue)
             delegate?.locationNotFound(reason: .noPermission)
         }
     }
@@ -99,5 +103,6 @@ extension LocationFinder: CLLocationManagerDelegate {
         delegate?.locationNotFound(reason: .error)
     }
 }
+
 
 

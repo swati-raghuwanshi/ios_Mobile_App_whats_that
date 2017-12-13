@@ -30,10 +30,10 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var imageView: UIImageView!
-    //@IBOutlet weak var spinner: UIActivityIndicatorView!
    
     @IBAction func chooseImageToAnalyze(_ sender: UITapGestureRecognizer) {
-        //print("i am in gesture")
+        
+        
         
         
                     imagePicker.allowsEditing = false
@@ -165,8 +165,10 @@ class PhotoIdentificationViewController: UIViewController, UIImagePickerControll
         //spinner.hidesWhenStopped = true
         MBProgressHUD.hide(for: self.view, animated: true)
         locationFinder.delegate = self
-        
+
         findLocation()
+//
+        
     }
     
     func findLocation() {

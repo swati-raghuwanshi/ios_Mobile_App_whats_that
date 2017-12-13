@@ -87,7 +87,6 @@ class GoogleVisionAPIManager {
         let task: URLSessionDataTask = session.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else {
                 self.delegate?.labelsNotFound(reason: .networkFailure)
-                //print(error?.localizedDescription ?? "")
                 return
             }
             
