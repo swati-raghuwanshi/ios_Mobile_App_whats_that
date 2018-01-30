@@ -25,7 +25,7 @@ class GoogleVisionAPIManager {
     var delegate: ApproximateLabelDelegate?
     let session = URLSession.shared
     
-    var googleAPIKey = "AIzaSyB9TTTCRcdTDNfdgtKrb9sI2tDBXlVOqKU"
+    var googleAPIKey = "your Key"
     var googleURL: URL {
         return URL(string: "https://vision.googleapis.com/v1/images:annotate?key=\(googleAPIKey)")!
         }
